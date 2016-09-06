@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace Classroom.API
 {
@@ -10,6 +13,13 @@ namespace Classroom.API
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+            var policy = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors(policy);
+
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+
 
             // Web API routes
             config.MapHttpAttributeRoutes();
