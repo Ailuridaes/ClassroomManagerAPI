@@ -103,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AssignmentsController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -116,6 +117,10 @@
     <Compile Include="Migrations\201609061857339_RequiredFields.cs" />
     <Compile Include="Migrations\201609061857339_RequiredFields.Designer.cs">
       <DependentUpon>201609061857339_RequiredFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609062020332_AddAssignmentGrade.cs" />
+    <Compile Include="Migrations\201609062020332_AddAssignmentGrade.Designer.cs">
+      <DependentUpon>201609062020332_AddAssignmentGrade.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Assignment.cs" />
@@ -141,6 +146,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609061857339_RequiredFields.resx">
       <DependentUpon>201609061857339_RequiredFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609062020332_AddAssignmentGrade.resx">
+      <DependentUpon>201609062020332_AddAssignmentGrade.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
