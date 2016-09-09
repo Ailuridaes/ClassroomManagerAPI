@@ -36,6 +36,13 @@ namespace Classroom.API.Controllers
         //    return Ok(assignment);
         //}
 
+        // GET: api/Assignments/Count
+        [HttpGet, Route("api/Assignments/Count")]
+        public IHttpActionResult GetAssignmentsCount()
+        {
+            return Ok(db.Assignments.Count());
+        }
+
         // PUT: api/Assignments/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutAssignment(int id, Assignment assignment)

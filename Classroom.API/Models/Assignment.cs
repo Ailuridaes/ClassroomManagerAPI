@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -10,8 +11,10 @@ namespace Classroom.API.Models
     public class Assignment
     {
         [Required]
+        [Column(Order = 1)]
         public int StudentId { get; set; }
         [Required]
+        [Column(Order = 2)]
         public int ProjectId { get; set; }
         [DefaultValue(0)]
         [Required]

@@ -36,6 +36,13 @@ namespace Classroom.API.Controllers
             return Ok(student);
         }
 
+        // GET: api/Students/Count
+        [HttpGet, Route("api/Students/Count")]
+        public IHttpActionResult GetStudentsCount()
+        {
+            return Ok(db.Students.Count());
+        }
+
         // PUT: api/Students/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutStudent(int id, Student student)
@@ -50,7 +57,11 @@ namespace Classroom.API.Controllers
                 return BadRequest();
             }
 
-            db.Entry(student).State = EntityState.Modified;
+            //db.Entry(student).State = EntityState.Modified;
+
+            var studentToUpdate = db.Students.Find(id);
+            db.Entry(studentToUpdate).CurrentValues.SetValues(student);
+            db.Entry(studentToUpdate).State = EntityState.Modified;
 
             try
             {
