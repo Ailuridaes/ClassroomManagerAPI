@@ -43,21 +43,26 @@ namespace Classroom.API.Controllers
             return Ok(db.Assignments.Count());
         }
 
-        // PUT: api/Assignments/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutAssignment(int id, Assignment assignment)
+        // PUT: api/Assignments/
+        [HttpPut, Route("api/Assignments"), ResponseType(typeof(void))]
+        public IHttpActionResult PutAssignment(Assignment assignment)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != assignment.StudentId)
+            // db.Entry(assignment).State = EntityState.Modified;
+
+            var assignmentToUpdate = db.Assignments.Find(assignment.StudentId, assignment.ProjectId);
+
+            if (assignmentToUpdate == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            db.Entry(assignment).State = EntityState.Modified;
+            db.Entry(assignmentToUpdate).CurrentValues.SetValues(assignment);
+            db.Entry(assignmentToUpdate).State = EntityState.Modified;
 
             try
             {
@@ -65,14 +70,7 @@ namespace Classroom.API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AssignmentExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -108,20 +106,26 @@ namespace Classroom.API.Controllers
             return CreatedAtRoute("DefaultApi", new { id = assignment.StudentId }, assignment);
         }
 
-        // DELETE: api/Assignments/5
-        [ResponseType(typeof(Assignment))]
-        public IHttpActionResult DeleteAssignment(int id)
+        // DELETE: api/Assignments
+        [HttpDelete, Route("api/Assignments"), ResponseType(typeof(Assignment))]
+        public IHttpActionResult DeleteAssignment(Assignment assignment)
         {
-            Assignment assignment = db.Assignments.Find(id);
-            if (assignment == null)
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            Assignment assignmentToDelete = db.Assignments.Find(assignment.StudentId, assignment.ProjectId);
+
+            if (assignmentToDelete == null)
             {
                 return NotFound();
             }
 
-            db.Assignments.Remove(assignment);
+            db.Assignments.Remove(assignmentToDelete);
             db.SaveChanges();
 
-            return Ok(assignment);
+            return Ok(assignmentToDelete);
         }
 
         protected override void Dispose(bool disposing)
