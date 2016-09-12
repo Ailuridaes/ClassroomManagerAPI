@@ -11,12 +11,9 @@ namespace Classroom.API.Models
     public class Assignment
     {
         [Required]
-        [Column(Order = 1)]
         public int StudentId { get; set; }
         [Required]
-        [Column(Order = 2)]
         public int ProjectId { get; set; }
-        [DefaultValue(0)]
         [Required]
         public int Grade { get; set; }
 

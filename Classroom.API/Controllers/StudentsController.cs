@@ -10,6 +10,8 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Classroom.API.Infrastructure;
 using Classroom.API.Models;
+using Classroom.API.DTO;
+using AutoMapper;
 
 namespace Classroom.API.Controllers
 {
@@ -18,9 +20,18 @@ namespace Classroom.API.Controllers
         private ClassroomDataContext db = new ClassroomDataContext();
 
         // GET: api/Students
-        public IQueryable<Student> GetStudents()
+        public IHttpActionResult GetStudents()
         {
-            return db.Students;
+            //return Mapper.Map<IEnumerable<Student>, IEnumerable<StudentDto.WithAssignments<AssignmentDto.WithProject>>>(db.Students);
+            return Ok(db.Students.Select(s => new
+            {
+                FirstName = s.FirstName,
+                LastName = s.LastName,
+                Assignments = s.Assignments.Select(a => new
+                {
+                   ProjectName = a.Project.Name 
+                })
+            }));
         }
 
         // GET: api/Students/5
@@ -33,7 +44,7 @@ namespace Classroom.API.Controllers
                 return NotFound();
             }
 
-            return Ok(student);
+            return Ok();
         }
 
         // GET: api/Students/Count
