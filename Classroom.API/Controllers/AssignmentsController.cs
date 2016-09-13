@@ -77,8 +77,8 @@ namespace Classroom.API.Controllers
         }
 
         // POST: api/Assignments
-        [ResponseType(typeof(Assignment))]
-        public IHttpActionResult PostAssignment(Assignment assignment)
+        [HttpPost, ResponseType(typeof(Assignment))]
+        public IHttpActionResult PostAssignment([FromBody]Assignment assignment)
         {
             if (!ModelState.IsValid)
             {
