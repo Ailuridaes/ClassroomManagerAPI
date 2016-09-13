@@ -20,18 +20,9 @@ namespace Classroom.API.Controllers
         private ClassroomDataContext db = new ClassroomDataContext();
 
         // GET: api/Students
-        public IHttpActionResult GetStudents()
+        public IEnumerable<StudentDto.WithAssignments<AssignmentDto>> GetStudents()
         {
-            //return Mapper.Map<IEnumerable<Student>, IEnumerable<StudentDto.WithAssignments<AssignmentDto.WithProject>>>(db.Students);
-            return Ok(db.Students.Select(s => new
-            {
-                FirstName = s.FirstName,
-                LastName = s.LastName,
-                Assignments = s.Assignments.Select(a => new
-                {
-                   ProjectName = a.Project.Name 
-                })
-            }));
+            return Mapper.Map<IEnumerable<Student>, IEnumerable<StudentDto.WithAssignments<AssignmentDto>>>(db.Students);
         }
 
         // GET: api/Students/5
@@ -44,7 +35,7 @@ namespace Classroom.API.Controllers
                 return NotFound();
             }
 
-            return Ok();
+            return Ok(Mapper.Map<StudentDto.WithAssignments<AssignmentDto.WithProject>>(student));
         }
 
         // GET: api/Students/Count
